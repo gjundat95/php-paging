@@ -38,12 +38,12 @@
 
     function find() {
         setCookie('name', document.getElementById('txtName').value, 1);
-        location.href = "<?php echo $base_url; ?>" +"?action=find&page=0&name="+ document.getElementById('txtName').value;
+        location.href = ?action=find&page=0&name="+ document.getElementById('txtName').value;
     };
 
     function clears() {
         setCookie('name', '', 0);
-        location.href = "<?php echo $base_url; ?>index.php?action=none&page=0";
+        location.href = "index.php?action=none&page=0";
     };
 
   </script>
@@ -87,13 +87,13 @@
       <ul class="pagination">
         <?php
 
-          $urlNext = $base_url.'?action=find&page='.($page+1).'&name='.$_COOKIE['name'];
+          $urlNext = '?action=find&page='.($page+1).'&name='.$_COOKIE['name'];
           if($page >= $totalPage - 1) {
-            $urlNext = $base_url.'?action=none&page='.($page).'&name='.$_COOKIE['name'];
+            $urlNext = '?action=none&page='.($page).'&name='.$_COOKIE['name'];
           }
 
           for($i = 0; $i < $totalPage; $i++) {
-            $url = $base_url.'?action=find&page='.$i.'&name='.$_COOKIE['name'];
+            $url = '?action=find&page='.$i.'&name='.$_COOKIE['name'];
 
             if($page == $i) {
               echo '<li class="page-item active"><a class="page-link" href="'.$url.'">'.$i.'</a></li>';
