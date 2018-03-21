@@ -13,8 +13,10 @@
     }
 
     public function index() {
+      $countUser = $this->model->getCountUsers();
       $data = $this->model->getUsers();
-      $this->view->index($data);
+      $totalPage = $this->model->getTotalPage();
+      $this->view->index($data, $this->model->page, $totalPage);
     }
 
     public function find() {
@@ -22,7 +24,8 @@
       if (isset($_GET['name'])) {
         $name = $_GET['name'];
         $data = $this->model->findUserByName('%'.$name.'%');
-        $this->view->index($data);
+        $totalPage = $this->model->getTotalPage();
+        $this->view->find($data, $this->model->page, $totalPage);
       }
     }
 

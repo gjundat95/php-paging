@@ -1,5 +1,6 @@
 <?php
   $base_url = "http://".$_SERVER['SERVER_NAME'].':8080'.dirname($_SERVER["REQUEST_URI"].'?').'/';
+  $name_temp = isset($name) ? $name: '';
 ?>
 <!DOCTYPE html>
 <html>
@@ -12,7 +13,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script type="text/javascript">
 
-     function setCookie(cname, cvalue, exdays) {
+    function setCookie(cname, cvalue, exdays) {
         var d = new Date();
         d.setTime(d.getTime() + (exdays*24*60*60*1000));
         var expires = "expires="+ d.toUTCString();
@@ -44,7 +45,6 @@
         setCookie('name', '', 0);
         location.href = "<?php echo $base_url; ?>index.php?action=none&page=0";
     };
-
 
   </script>
 </head>
@@ -87,13 +87,13 @@
       <ul class="pagination">
         <?php
 
-          $urlNext = $base_url.'?action=none&page='.($page+1);
+          $urlNext = $base_url.'?action=find&page='.($page+1).'&name='.$_COOKIE['name'];
           if($page >= $totalPage - 1) {
-            $urlNext = $base_url.'?action=none&page='.($page);
+            $urlNext = $base_url.'?action=none&page='.($page).'&name='.$_COOKIE['name'];
           }
 
           for($i = 0; $i < $totalPage; $i++) {
-            $url = $base_url.'?action=none&page='.$i;
+            $url = $base_url.'?action=find&page='.$i.'&name='.$_COOKIE['name'];
 
             if($page == $i) {
               echo '<li class="page-item active"><a class="page-link" href="'.$url.'">'.$i.'</a></li>';
@@ -101,7 +101,7 @@
               echo '<li class="page-item"><a class="page-link" href="'.$url.'">'.$i.'</a></li>';
             }
           }
-
+          
         ?>
         <li class="page-item">
           <a class="page-link" href="<?php echo $urlNext; ?>">Next</a>

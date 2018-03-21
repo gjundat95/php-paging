@@ -2,7 +2,7 @@
 
 class Database {
     private static $host = 'localhost';
-    private static $dbName = 'wpdemo';
+    private static $dbName = 'wp_demo';
     private static $username = 'root';
     private static $password = '';
     public static $con = null;
