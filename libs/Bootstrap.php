@@ -13,8 +13,8 @@
           case 'none' :
             $this->controller->index();
             break;
-          case 'findUserByName' :
-            $this->controller->findUserByName();
+          case 'find' :
+            $this->controller->find();
             break;
           default:   
             $this->controller->index();

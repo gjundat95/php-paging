@@ -13,14 +13,14 @@
     }
 
     public function index() {
-      $data = $this->model->getAllUsers();
+      $data = $this->model->getUsers();
       $this->view->index($data);
     }
 
-    public function findUserByName() {
+    public function find() {
      
-      if (isset($_POST['name'])) {
-        $name = $_POST['name'];
+      if (isset($_GET['name'])) {
+        $name = $_GET['name'];
         $data = $this->model->findUserByName('%'.$name.'%');
         $this->view->index($data);
       }

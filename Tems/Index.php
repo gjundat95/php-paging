@@ -7,6 +7,14 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+      function find() {
+        location.href = "http://localhost/wpdemo/wp-content/themes/twentyfifteen/findusers/index.php?action=find&name="+document.getElementById('txtName').value;
+      };
+      function clears() {
+        location.href = "http://localhost/wpdemo/wp-content/themes/twentyfifteen/findusers/index.php";
+      };
+  </script>
 </head>
 <body>
   <div>
@@ -14,9 +22,9 @@
     <table>
       <tr>
         <td>Enter infor: </td>
-        <td><input type="text" class="form-control" id="usr"></td>
-        <td><button type="button" class="btn btn-default" onclick="onClickFind()">Find</button></td>
-        <td><button type="button" class="btn btn-default" onclick="onClickClear()">Clear</button></td>
+        <td><input type="text" class="form-control" id="txtName"></td>
+        <td><button id="btnFind" type="button" class="btn btn-default" onClick="find()" >Find</button></td>
+        <td><button id="btnClear" type="button" class="btn btn-default" onClick="clears()" >Clear</button></td>
       </tr>
     </table>
 

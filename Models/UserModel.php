@@ -9,7 +9,7 @@
       $this->con = Database::connect();
     }
 
-    public function getUsers($limint = 10; $page = 1) {
+    public function getUsers() {
 
       $sql = 'SELECT ID,user_email,display_name FROM wp_users';
       $stmt = $this->con->prepare($sql);
