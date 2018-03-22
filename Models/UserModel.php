@@ -59,7 +59,7 @@
 
       $offset = isset($_GET['page']) ? ($this->page * $this->limit) : 0;
 
-      $sql = 'SELECT ID,user_email,display_name FROM wp_users  WHERE display_name like :name LIMIT :limit OFFSET :offset';
+      $sql = 'SELECT ID,user_email,display_name FROM wp_users  WHERE display_name like :name ORDER BY display_name LIMIT :limit OFFSET :offset';
       $stmt = $this->con->prepare($sql);
       $stmt->bindParam(':name',$name, PDO::PARAM_STR);
       $stmt->bindParam(':limit',$this->limit, PDO::PARAM_INT);

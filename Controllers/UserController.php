@@ -25,6 +25,10 @@
         $data = $this->model->findUserByName('%'.$name.'%');
         $totalPage = $this->model->getTotalPageFind('%'.$name.'%');
         $this->view->find($data, $this->model->page, $totalPage);
+      } else {
+        $data = [];
+        $totalPage = [];
+        $this->view->find($data, $this->model->page, $totalPage);
       }
     }
 
