@@ -1,5 +1,5 @@
 <?php
-  require_once('libs/Database.php');
+  require_once('Libs/Database.php');
 
   class UserModel {
     
@@ -28,7 +28,7 @@
     public function getUsers() {
 
       $total = intval($this->getCountUsers());
-      $this->page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+      $this->page = isset($_GET['page']) ? intval($_GET['page']) : 0;
 
       $offset = isset($_GET['page']) ? ($this->page * $this->limit) : 0;
 
@@ -59,14 +59,11 @@
       $stmt->execute();
       $stmt = $stmt->fetchAll();
       return $stmt;
+
     }
 
-    public function onClickFind() {
-      echo "click find";
-    }
-
-    public function onClickClear() {
-      echo "click clear";
+    function __destruct() {
+      Database::disconnect();
     }
 
   }

@@ -1,5 +1,5 @@
 <?php
-  require_once('libs/Bootstrap.php');
+  require_once('Libs/Bootstrap.php');
 
   $bootstrap = new Bootstrap();
 ?>

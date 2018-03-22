@@ -1,7 +1,3 @@
-<?php
-  $base_url = "http://".$_SERVER['SERVER_NAME'].':8080'.dirname($_SERVER["REQUEST_URI"].'?').'/';
-  $name_temp = isset($name) ? $name: '';
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +9,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script type="text/javascript">
 
-    function setCookie(cname, cvalue, exdays) {
+     function setCookie(cname, cvalue, exdays) {
         var d = new Date();
         d.setTime(d.getTime() + (exdays*24*60*60*1000));
         var expires = "expires="+ d.toUTCString();
@@ -36,15 +32,17 @@
         return "";
     }
 
-    function find() {
-        setCookie('name', document.getElementById('txtName').value, 1);
-        location.href = ?action=find&page=0&name="+ document.getElementById('txtName').value;
+    function find_home() {
+        var name = escape(document.getElementById('txtName').value);
+        setCookie('name', name, 1);
+        location.href = "?action=find&page=0&name="+name;
     };
 
-    function clears() {
+    function clear_home() {
         setCookie('name', '', 0);
-        location.href = "index.php?action=none&page=0";
+        location.href = "?action=none&page=0";
     };
+
 
   </script>
 </head>
@@ -55,8 +53,8 @@
       <tr>
         <td>Enter infor: </td>
         <td><input type="text" class="form-control" id="txtName"></td>
-        <td><button id="btnFind" type="button" class="btn btn-default" onClick="find()" >Find</button></td>
-        <td><button id="btnClear" type="button" class="btn btn-default" onClick="clears()" >Clear</button></td>
+        <td><button id="btnFind" type="button" class="btn btn-default" onClick="find_home()" >Find</button></td>
+        <td><button id="btnClear" type="button" class="btn btn-default" onClick="clear_home()" >Clear</button></td>
       </tr>
     </table>
 
@@ -87,13 +85,13 @@
       <ul class="pagination">
         <?php
 
-          $urlNext = '?action=find&page='.($page+1).'&name='.$_COOKIE['name'];
+          $urlNext = '?action=none&page='.($page+1);
           if($page >= $totalPage - 1) {
-            $urlNext = '?action=none&page='.($page).'&name='.$_COOKIE['name'];
+            $urlNext = '?action=none&page='.($page);
           }
 
           for($i = 0; $i < $totalPage; $i++) {
-            $url = '?action=find&page='.$i.'&name='.$_COOKIE['name'];
+            $url = '?action=none&page='.$i;
 
             if($page == $i) {
               echo '<li class="page-item active"><a class="page-link" href="'.$url.'">'.$i.'</a></li>';
@@ -101,7 +99,7 @@
               echo '<li class="page-item"><a class="page-link" href="'.$url.'">'.$i.'</a></li>';
             }
           }
-          
+
         ?>
         <li class="page-item">
           <a class="page-link" href="<?php echo $urlNext; ?>">Next</a>

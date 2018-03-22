@@ -2,11 +2,11 @@
   class UserView {
 
     public function index($data, $page, $totalPage) {
-      require_once 'Tems/Index.php';
+      require_once 'Templates/index.php';
     }
     
     public function find($data, $page, $totalPage) {
-      require_once 'Tems/Find.php';
+      require_once 'Templates/find.php';
     }
     
   }
