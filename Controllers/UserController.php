@@ -23,7 +23,7 @@
       if (isset($_GET['name'])) {
         $name = $_GET['name'];
         $data = $this->model->findUserByName('%'.$name.'%');
-        $totalPage = $this->model->getTotalPage();
+        $totalPage = $this->model->getTotalPageFind('%'.$name.'%');
         $this->view->find($data, $this->model->page, $totalPage);
       }
     }

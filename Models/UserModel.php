@@ -25,6 +25,16 @@
       return ceil($total / $this->limit);
     }
 
+    public function getTotalPageFind($name) {
+      $sql = 'SELECT ID,user_email,display_name FROM wp_users WHERE display_name like :name ';
+      $stmt = $this->con->prepare($sql);
+      $stmt->bindParam(':name',$name, PDO::PARAM_STR);
+      $stmt->setFetchMode(PDO::FETCH_OBJ);
+      $stmt->execute();
+      $totalFind = $stmt->rowCount();
+      return ceil($totalFind / $this->limit);
+    }
+
     public function getUsers() {
 
       $total = intval($this->getCountUsers());
@@ -32,14 +42,13 @@
 
       $offset = isset($_GET['page']) ? ($this->page * $this->limit) : 0;
 
-      $sql = 'SELECT ID,user_email,display_name FROM wp_users LIMIT :limit OFFSET :offset';
+      $sql = 'SELECT ID,user_email,display_name FROM wp_users ORDER BY display_name LIMIT :limit OFFSET :offset';
       $stmt = $this->con->prepare($sql);
       $stmt->bindParam(':limit',$this->limit, PDO::PARAM_INT);
       $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
       $stmt->setFetchMode(PDO::FETCH_OBJ);
       $stmt->execute();
       $stmt = $stmt->fetchAll();
-
       return $stmt;
     }
 
@@ -50,7 +59,7 @@
 
       $offset = isset($_GET['page']) ? ($this->page * $this->limit) : 0;
 
-      $sql = 'SELECT ID,user_email,display_name FROM wp_users WHERE display_name like :name LIMIT :limit OFFSET :offset';
+      $sql = 'SELECT ID,user_email,display_name FROM wp_users  WHERE display_name like :name LIMIT :limit OFFSET :offset';
       $stmt = $this->con->prepare($sql);
       $stmt->bindParam(':name',$name, PDO::PARAM_STR);
       $stmt->bindParam(':limit',$this->limit, PDO::PARAM_INT);
@@ -59,7 +68,6 @@
       $stmt->execute();
       $stmt = $stmt->fetchAll();
       return $stmt;
-
     }
 
     function __destruct() {
