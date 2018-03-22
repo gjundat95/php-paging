@@ -95,7 +95,7 @@
           <li class="page-item "><a class="page-link" href="?action=find&name=<?php echo $_COOKIE['name'] ?>&page=0"><<</a></li>
           <?php
 
-          if($page == 0) {
+          if($page == 0 && $totalPage >= 10) {
             for($i = 0; $i < 10; $i++) {
               $position = $i + 1;
               $url = '?action=find&page='.$i.'&name='.$_COOKIE['name'];
@@ -108,8 +108,34 @@
             }
           }
 
-          if($page+1 == $totalPage) {
+          if($page == 0 && $totalPage <= 10) {
+            for($i = 0; $i < $totalPage; $i++) {
+              $position = $i + 1;
+              $url = '?action=find&page='.$i.'&name='.$_COOKIE['name'];
+  
+              if($page == $i) {
+                echo '<li class="page-item active"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+              } else {
+                echo '<li class="page-item"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+              }
+            }
+          }
+
+          if($page+1 == $totalPage && $totalPage >= 10) {
             for($i = $totalPage - 10; $i < $totalPage; $i++) {
+              $position = $i + 1;
+              $url = '?action=find&page='.$i.'&name='.$_COOKIE['name'];
+  
+              if($page == $i) {
+                echo '<li class="page-item active"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+              } else {
+                echo '<li class="page-item"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+              }
+            }
+          }
+
+          if($page+1 == $totalPage && $totalPage <= 10) {
+            for($i = 0; $i < $totalPage; $i++) {
               $position = $i + 1;
               $url = '?action=find&page='.$i.'&name='.$_COOKIE['name'];
   
