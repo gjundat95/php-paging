@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Page Title</title>
+  <title>Find User</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -51,7 +51,7 @@
 
     <table>
       <tr>
-        <td>Enter infor: </td>
+        <td>Find User: </td>
         <td><input type="text" class="form-control" id="txtName"></td>
         <td><button id="btnFind" type="button" class="btn btn-default" onClick="find_home()" >Find</button></td>
         <td><button id="btnClear" type="button" class="btn btn-default" onClick="clear_home()" >Clear</button></td>
@@ -85,25 +85,58 @@
       <ul class="pagination">
         <?php
 
-          $urlNext = '?action=none&page='.($page+1);
-          if($page >= $totalPage - 1) {
-            $urlNext = '?action=none&page='.($page);
-          }
+          $links = 5;
+          $start = ($page - $links) > 0 ? $page - $links : 0;
+          $end =   ($page + $links) < $totalPage ? $page + $links : $totalPage;
 
-          for($i = 0; $i < $totalPage; $i++) {
-            $url = '?action=none&page='.$i;
+          ?>
+          <li class="page-item "><a class="page-link" href="?action=none"><<</a></li>
+          <?php
 
-            if($page == $i) {
-              echo '<li class="page-item active"><a class="page-link" href="'.$url.'">'.$i.'</a></li>';
-            } else {
-              echo '<li class="page-item"><a class="page-link" href="'.$url.'">'.$i.'</a></li>';
+          if($page == 0) {
+            for($i = 0; $i < 10; $i++) {
+              $position = $i + 1;
+              $url = '?action=none&page='.$position;
+  
+              if($page == $i) {
+                echo '<li class="page-item active"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+              } else {
+                echo '<li class="page-item"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+              }
             }
           }
 
+          if($page+1 == $totalPage) {
+            for($i = $totalPage - 10; $i < $totalPage; $i++) {
+              $position = $i + 1;
+              $url = '?action=none&page='.$i;
+  
+              if($page == $i) {
+                echo '<li class="page-item active"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+              } else {
+                echo '<li class="page-item"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+              }
+            }
+          }
+
+          if($page != 0 && $page+1 != $totalPage) {
+            for($i = $start; $i < $end; $i++) {
+              $position = $i + 1;
+              $url = '?action=none&page='.$i;
+  
+              if($page == $i) {
+                echo '<li class="page-item active"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+              } else {
+                echo '<li class="page-item"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+              }
+            }
+          }
+
+          ?>
+           <li class="page-item "><a class="page-link" href="?action=none&page=<?php echo ($totalPage - 1) ?>">>></a></li>
+          <?php
+
         ?>
-        <li class="page-item">
-          <a class="page-link" href="<?php echo $urlNext; ?>">Next</a>
-        </li>
       </ul>
     </nav>
 

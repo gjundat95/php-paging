@@ -2,7 +2,7 @@
 
 class Database {
     private static $host = 'localhost';
-    private static $dbName = 'wpdemo';
+    private static $dbName = 'dn-asikt';
     private static $username = 'root';
     private static $password = '';
     public static $con = null;

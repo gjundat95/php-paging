@@ -53,7 +53,7 @@
 
     <table>
       <tr>
-        <td>Enter infor: </td>
+        <td>Find User: </td>
         <td><input type="text" class="form-control" id="txtName"></td>
         <td><button id="btnFind" type="button" class="btn btn-default" onClick="finds()" >Find</button></td>
         <td><button id="btnClear" type="button" class="btn btn-default" onClick="clears()" >Clear</button></td>
@@ -87,25 +87,60 @@
       <ul class="pagination">
         <?php
 
-          $urlNext = '?action=find&page='.($page+1).'&name='.$_COOKIE['name'];
-          if($page >= $totalPage - 1) {
-            $urlNext = '?action=find&page='.($page).'&name='.$_COOKIE['name'];
-          }
+          $links = 5;
+          $start = ($page - $links) > 0 ? $page - $links : 0;
+          $end =   ($page + $links) < $totalPage ? $page + $links : $totalPage;
 
-          for($i = 0; $i < $totalPage - 1; $i++) {
-            $url = '?action=find&page='.$i.'&name='.$_COOKIE['name'];
+          ?>
+          <li class="page-item "><a class="page-link" href="?action=find&name=<?php echo $_COOKIE['name'] ?>&page=0"><<</a></li>
+          <?php
 
-            if($page == $i) {
-              echo '<li class="page-item active"><a class="page-link" href="'.$url.'">'.$i.'</a></li>';
-            } else {
-              echo '<li class="page-item"><a class="page-link" href="'.$url.'">'.$i.'</a></li>';
+          if($page == 0) {
+            for($i = 0; $i < 10; $i++) {
+              $position = $i + 1;
+              $url = '?action=find&page='.$i.'&name='.$_COOKIE['name'];
+  
+              if($page == $i) {
+                echo '<li class="page-item active"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+              } else {
+                echo '<li class="page-item"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+              }
             }
           }
+
+          if($page+1 == $totalPage) {
+            for($i = $totalPage - 10; $i < $totalPage; $i++) {
+              $position = $i + 1;
+              $url = '?action=find&page='.$i.'&name='.$_COOKIE['name'];
+  
+              if($page == $i) {
+                echo '<li class="page-item active"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+              } else {
+                echo '<li class="page-item"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+              }
+            }
+          }
+
+          if($page != 0 && $page+1 != $totalPage) {
+            for($i = 0; $i < 10; $i++) {
+              $position = $i + 1;
+              $url = '?action=find&page='.$i.'&name='.$_COOKIE['name'];
+  
+              if($page == $i) {
+                echo '<li class="page-item active"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+              } else {
+                echo '<li class="page-item"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+              }
+            }
+          }
+
+          ?>
+          <li class="page-item "><a class="page-link" href="?action=find&name=<?php echo $_COOKIE['name'] ?>&page=<?php echo ($totalPage-1) ?>">>></a></li>
+         <?php
           
         ?>
-        <li class="page-item">
-          <a class="page-link" href="<?php echo $urlNext; ?>">Next</a>
-        </li>
+       
+
       </ul>
     </nav>
 
