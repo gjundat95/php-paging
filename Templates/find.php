@@ -14,7 +14,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   
 </head>
-<body>
+<body id="body">
 
   <script type="text/javascript">
 
@@ -42,7 +42,7 @@
       }
 
       function finds() {
-        var name = escape(document.getElementById('txtName').value);
+        var name = escape(document.getElementById('text-name').value);
         setCookie('name', name, 1);
         location.href = "?action=find&page=0&name="+name;
       };
@@ -52,21 +52,46 @@
           location.href = "?action=none&page=0";
       };
 
+
+      function closeDialog(id, name, mail) {
+        var returnedValue = {
+            id: id,
+            name: name,
+            mail: mail
+        };
+
+        if (window.showModalDialog) {//IE + FF + legacy Chrome
+            if (window.opener)
+            {
+                window.opener.returnValue = returnedValue;
+            }
+            window.returnValue = returnedValue;
+            window.close();
+        }
+        else {
+            // Chrome support (& Opera?)
+            console.log("Tuan anh");
+            window.opener.SetReturnedValue(JSON.stringify(returnedValue));
+            window.close();
+        }
+    };
+
+
   </script>
 
   <div id="container">
 
     <table>
       <tr>
-      <td><p id="textFind">Find User: </p></td>
-        <td><input type="text" id="txtName"></td>
-        <td><button id="btnFind" type="button"  onClick="finds()" >Find</button></td>
-        <td><button id="btnClear" type="button"  onClick="clears()" >Clear</button></td>
+      <td><p id="text-find">Find User: </p></td>
+        <td><input type="text" id="text-name"></td>
+        <td><button id="button-find" type="button"  onClick="finds()" >Find</button></td>
+        <td><button id="button-clear" type="button"  onClick="clears()" >Clear</button></td>
       </tr>
     </table>
 
-    <table class="table table-bordered" id="table-list-user">
-      <thead>
+    <table class="table table-striped" id="table-list-user">
+      <thead style="background-color: #fff">
         <tr>
           <th id="column-table-name">Name</th>
           <th id="column-table-email">Email</th>
@@ -80,8 +105,10 @@
             echo '<tr>';
             echo '<td id="column-table-name">'.$item->display_name.'</td>';
             echo '<td id="column-table-email">'.$item->user_email.'</td>';
-            echo '<td id="column-table-select"><button type="button" class="btn btn-default">Select</button></td>';
-            echo '</tr>';
+            ?>
+            <td><button type="button" class="btn btn-default" onclick="closeDialog(&#39;<?php echo $item->ID; ?>&#39;,&#39;<?php echo $item->display_name; ?>&#39;,&#39;<?php echo $item->user_email; ?>&#39;)">Select</button></td>
+            </tr>
+            <?php
           }
         ?>
       
@@ -171,14 +198,27 @@
                 }
               }
             } else {
-              for($i = 0; $i < 10; $i++) {
-                $position = $i + 1;
-                $url = '?action=find&page='.$i.'&name='.$_COOKIE['name'];
-    
-                if($page == $i) {
-                  echo '<li class="page-item active"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
-                } else {
-                  echo '<li class="page-item"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+              if($page < 5) {
+                for($i = $start; $i < 10; $i++) {
+                  $position = $i + 1;
+                  $url = '?action=find&page='.$i.'&name='.$_COOKIE['name'];
+      
+                  if($page == $i) {
+                    echo '<li class="page-item active"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+                  } else {
+                    echo '<li class="page-item"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+                  }
+                }
+              } else {
+                for($i = $start; $i < $end; $i++) {
+                  $position = $i + 1;
+                  $url = '?action=find&page='.$i.'&name='.$_COOKIE['name'];
+      
+                  if($page == $i) {
+                    echo '<li class="page-item active"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+                  } else {
+                    echo '<li class="page-item"><a class="page-link" href="'.$url.'">'.$position.'</a></li>';
+                  }
                 }
               }
             }
@@ -193,6 +233,17 @@
 
       </ul>
     </nav>
+
+<script type="text/javascript">
+    document.getElementById("text-name").value = unescape(getCookie('name'));
+    document.getElementById("text-name")
+    .addEventListener("keyup", function(event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            finds();
+        }
+    });
+</script>       
 
 </body>
 </html>
